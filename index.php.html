@@ -1,0 +1,78 @@
+<?php
+
+session_start();
+$con = mysqli_connect('localhost','root');
+
+mysqli_select_db($con, 'blood bank');
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+$name = $_POST['un'];
+$pass = $_POST['ps'];
+    
+
+$q = "select * from admin where username = '$name' && password = '$pass'";
+
+
+$result = mysqli_query($con, $q);
+
+$num = mysqli_num_rows($result);
+
+
+
+if($num == 1)
+{
+    header('location:welcome.php');
+}
+
+else {
+    $message = "Invalid user";
+echo "<script type='text/javascript'>alert('$message');</script>";
+    
+}
+}
+
+?> 
+ 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="css/s1.css">
+</head>
+<body>
+<div id="full">
+	<div id="inner_full">
+		<div id="header"><h2>Blood Bank Management System</h2></div>
+			<div id="body">
+				<br><br><br><br><br>
+				<form action="" method="post">		
+				<table align="center">
+					<tr>
+						<td width="200px" height="70px"><b>Enter Username</b></td>
+						<td width="100px" height="70px"><input type="text" name="un" placeholder="Enter username" style="
+						width:100px;height:30px;border-radius:10px"></td>
+					</tr>
+					<tr>
+						<td width="200px" height="70"><b>Enter Password</b></td>
+						<td width="200px"  height="70px"><input type="password" id="ps" name="ps"
+                              style="width:100px;height:30px;border-radius:10px"> </td>
+					<tr>
+						<td><input type="submit" name="sub" value="Login" style="width:70px;
+						height: 30px;border-radius: 5px;"></td>
+					</tr>
+				</table>
+			</form>
+			<?php
+			if (isset($_POST['sub']))
+			 {
+				$un=$_POST['un'];
+				$pass=$_POST['ps'];
+			}
+			?>
+			</div>
+		    <div id="footer"><h4 align="center">copyright@myproject</h4></div>
+		</div>
+</div>		
+</body>
+</html>
